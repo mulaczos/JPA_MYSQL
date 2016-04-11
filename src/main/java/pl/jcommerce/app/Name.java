@@ -1,9 +1,14 @@
 package pl.jcommerce.app;
 
-public class Name {
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
+@Embeddable
+public class Name  {
 
+	@Column(name="pierwsze_imie")
 	private String firstName;
+	@Column(name="drugie_imie")
 	private String lastName;
 	
 	public Name() {} 
@@ -31,7 +36,7 @@ public class Name {
 
 	@Override
 	public String toString() {
-		return "Name [firstName=" + firstName + ", lastName=" + lastName + "]";
+		return super.toString()+" firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
 }

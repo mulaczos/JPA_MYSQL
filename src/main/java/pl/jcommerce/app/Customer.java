@@ -1,32 +1,53 @@
 package pl.jcommerce.app;
 
-
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name="Klient")
+@Entity
+@Table(name = "Klient")
 public class Customer {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    private String firstName;
-    private String lastName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    protected Customer() {}
+	// @AttributeOverrides({
+	// @AttributeOverride(name="firstName",
+	// column=@Column(name="pierwszeImie")),
+	// @AttributeOverride(name="lastName", column=@Column(name="drugieImie")) })
+	@Embedded
+	private Name name;
 
-    public Customer(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+	public Customer() {
+	}
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Customer[id=%d, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
-    }
+	public Customer(String firstName, String lastName) {
+		name = new Name(firstName, lastName);
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Name getName() {
+		return name;
+	}
+
+	public void setName(Name name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name.toString() + "]";
+	}
 
 }
