@@ -1,14 +1,16 @@
-package pl.jcommerce.app;
+package pl.jcommerce.app.model;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Klient")
+@NamedQuery(name="firstName", query="SELECT c FROM Customer c where c.name.firstName like :firstName")
 public class Customer {
 
 	@Id
@@ -28,7 +30,8 @@ public class Customer {
 	public Customer(String firstName, String lastName) {
 		name = new Name(firstName, lastName);
 	}
-
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -37,10 +40,15 @@ public class Customer {
 		this.id = id;
 	}
 
-	public Name getName() {
-		return name;
+	public String getFullName() {
+		return name.toString();
 	}
-
+	
+	@Deprecated
+	/**
+	 * To set a name use @class Name class methods
+	 * 
+	 */
 	public void setName(Name name) {
 		this.name = name;
 	}

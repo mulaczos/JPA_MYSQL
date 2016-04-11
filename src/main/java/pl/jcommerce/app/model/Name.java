@@ -1,17 +1,18 @@
-package pl.jcommerce.app;
+package pl.jcommerce.app.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Name  {
+public class Name {
 
-	@Column(name="pierwsze_imie")
+	@Column(name = "pierwsze_imie")
 	private String firstName;
-	@Column(name="drugie_imie")
+	@Column(name = "drugie_imie")
 	private String lastName;
-	
-	public Name() {} 
+
+	public Name() {
+	}
 
 	public Name(String firstName, String lastName) {
 		this.firstName = firstName;
@@ -36,7 +37,7 @@ public class Name  {
 
 	@Override
 	public String toString() {
-		return super.toString()+" firstName=" + firstName + ", lastName=" + lastName + "]";
+		return super.toString() + " firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
 }

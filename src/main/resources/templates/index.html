@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <form action="#" th:action="@{/}" th:object="${Customer}" method="post">
+            <table>
+                <tr>
+                    <td>First name:</td>
+                    <td><input type="text" th:field="*{firstName}" /></td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td><input type="text" th:field="*{lastName}" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
