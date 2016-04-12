@@ -30,7 +30,6 @@ public class Application {
 			log.info("--------------------------------");
 			log.info("--------------------------------");
 			log.info("--------------------------------");
-			log.info("--------------------------------");
 			customerDao.addCustomer(new Customer("Ania", "Bajka"));
 			customerDao.addCustomer(new Customer("Rysiu", "Lulek"));
 			customerDao.addCustomer(new Customer("Stasiu", "Bolek"));

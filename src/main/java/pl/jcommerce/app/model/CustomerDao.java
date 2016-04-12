@@ -24,11 +24,10 @@ public class CustomerDao {
 		manager.persist(customer);
 	}
 
-	public List<Customer> findById(long id) {
-		TypedQuery<Customer> findByFirstNameQuery = manager.createQuery("SELECT c FROM Customer c where c.id is :id",
-				Customer.class);
+	public Customer findById(long id) {
+		TypedQuery<Customer> findByFirstNameQuery = manager.createQuery("SELECT c FROM Customer c where c.id is :id",Customer.class);
 		findByFirstNameQuery.setParameter("id", id);
-		return findByFirstNameQuery.getResultList();
+		return findByFirstNameQuery.getSingleResult();
 	}
 
 	// TEGO TYPU METOD NIE POWINNO SIĘ TWORZYĆ.

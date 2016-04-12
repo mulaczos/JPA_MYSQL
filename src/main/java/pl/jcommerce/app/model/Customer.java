@@ -44,7 +44,10 @@ public class Customer {
 		return name.toString();
 	}
 	
-	@Deprecated
+	public Name getName() {
+		return name;
+	}
+	
 	/**
 	 * To set a name use @class Name class methods
 	 * 

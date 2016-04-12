@@ -1,14 +1,14 @@
 <html>
     <body>
-        <form action="#" th:action="@{/}" th:object="${Customer}" method="post">
+        <form action="#" th:action="@{/}" th:object="${customer}" method="post">
             <table>
                 <tr>
                     <td>First name:</td>
-                    <td><input type="text" th:field="*{firstName}" /></td>
+                    <td><input type="text" th:field="*{name.firstName}" /></td>
                 </tr>
                 <tr>
                     <td>Last name:</td>
-                    <td><input type="text" th:field="*{lastName}" /></td>
+                    <td><input type="text" th:field="*{name.lastName}" /></td>
                 </tr>
                 <tr>
                     <td><button type="submit">Submit</button></td>
