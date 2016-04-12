@@ -1,5 +1,7 @@
 package pl.jcommerce.app.controller;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,21 +18,27 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.jcommerce.app.model.Customer;
 import pl.jcommerce.app.model.CustomerDao;
 
+
 @Controller
 public class WebController {
+
+	
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/resources/Wi2/**").addResourceLocations("(/resources/Wi2");
+//	}
+//	
 
 	@Autowired
 	private CustomerDao customerDao;
 
-//	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getFrontPage() {
 		return new ModelAndView("index", "customer", new Customer());
 	}
-	
+
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Customer> getUser(@PathVariable("id") long id) {
+	public ResponseEntity<Customer> findById(@PathVariable("id") long id) {
 		try {
 			Customer customer = customerDao.findById(id);
 			return new ResponseEntity<Customer>(customer, HttpStatus.OK);
@@ -42,10 +49,47 @@ public class WebController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("customer") Customer customer, BindingResult result) {
+	public ModelAndView addCustomer(@ModelAttribute("customer") Customer customer) {
 		customerDao.addCustomer(customer);
 		ModelAndView mv = new ModelAndView("added", "customer", customer);
-		
 		return mv;
+	}
+
+	@RequestMapping("/delete/{id}")
+	public ModelAndView deleteCustomer(@PathVariable("id") long id) {
+		try {
+			Customer customer = customerDao.findById(id);
+			customerDao.delete(customer);
+			return new ModelAndView("deleted", "customer", customer);
+		} catch (EntityNotFoundException e) {
+			System.out.println("User with id: " + id + "Not exist");
+			return new ModelAndView("forward:/");
+		}
+	}
+
+	@RequestMapping(value = "/find/firstname/{firstname}")
+	public ResponseEntity<List<Customer>> findByFirstName(@PathVariable("firstname") String firstname) {
+		try {
+			List<Customer> list = customerDao.findByFirstName(firstname);
+			return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<List<Customer>>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping(value = "/find/lastname/{lastname}")
+	public ResponseEntity<List<Customer>> findByLastName(@PathVariable("lastname") String lastname) {
+		try {
+			List<Customer> list = customerDao.findByLastName(lastname);
+			return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<List<Customer>>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping(value = "/all")
+	public ResponseEntity<List<Customer>> findAllCustomers() {
+		List<Customer> list = customerDao.findAll();
+		return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
 	}
 }

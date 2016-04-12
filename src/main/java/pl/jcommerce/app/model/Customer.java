@@ -40,9 +40,9 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getFullName() {
-		return name.toString();
-	}
+//	public String getFullName() {
+//		return name.toString();
+//	}
 	
 	public Name getName() {
 		return name;

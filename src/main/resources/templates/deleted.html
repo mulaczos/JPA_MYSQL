@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Deleted completed! This customer was erased from database:</h1>
+	<p th:text="'id: '+ ${customer.id}"/>
+    <p th:text="'First name: ' + ${customer.name.firstName}" />
+    <p th:text="'Last name: ' + ${customer.name.lastName}" />
+    <a href="/">Back to main form</a>
+</body>
+</html>
