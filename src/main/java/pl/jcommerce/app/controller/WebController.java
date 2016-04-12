@@ -18,16 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.jcommerce.app.model.Customer;
 import pl.jcommerce.app.model.CustomerDao;
 
-
 @Controller
 public class WebController {
 
-	
-//	@Override
-//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		registry.addResourceHandler("/resources/Wi2/**").addResourceLocations("(/resources/Wi2");
-//	}
-//	
+	// @Override
+	// public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	// registry.addResourceHandler("/resources/Wi2/**").addResourceLocations("(/resources/Wi2");
+	// }
+	//
 
 	@Autowired
 	private CustomerDao customerDao;
@@ -65,6 +63,12 @@ public class WebController {
 			System.out.println("User with id: " + id + "Not exist");
 			return new ModelAndView("forward:/");
 		}
+	}
+
+	@RequestMapping("/deleteall")
+	public String deleteAll() {
+		customerDao.deleteAll();
+		return "forward:/all";
 	}
 
 	@RequestMapping(value = "/find/firstname/{firstname}")

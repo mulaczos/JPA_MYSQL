@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -52,15 +53,22 @@ public class CustomerDao {
 		query.select(root).where(cb.equal(root.get("name").get("lastName"), name));
 		return manager.createQuery(query).getResultList();
 	}
+
 	
+	@Transactional
 	public void delete(Customer entity) {
-		try {
 			manager.remove(entity);
-		}
-		catch(EntityNotFoundException e) {
-			System.out.println("Not found");
-		}
 	}
+	
+	@Transactional
+	public void deleteAll() {
+		List<Customer> list = findAll();
+		for(Customer cst : list) {
+			manager.remove(cst);
+		}
+		
+	}
+	
 	
 	public String printAll() {
 		Query query = manager.createQuery("SELECT c FROM Customer c");

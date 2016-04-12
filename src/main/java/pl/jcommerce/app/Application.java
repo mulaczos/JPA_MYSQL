@@ -34,18 +34,9 @@ public class Application {
 			log.info("--------------------------------");
 			log.info("--------------------------------");
 			log.info("--------------------------------");
-			customerDao.addCustomer(new Customer("Ania", "Bajka"));
-			customerDao.addCustomer(new Customer("Rysiu", "Lulek"));
-			customerDao.addCustomer(new Customer("Stasiu", "Bolek"));
-			customerDao.addCustomer(new Customer("Kasia", "Trolek"));
-			customerDao.addCustomer(new Customer("Anita", "Mekeke"));
-			customerDao.addCustomer(new Customer("Krysyna", "Bajka"));
-			customerDao.addCustomer(new Customer("Wonsz", "Bajka"));
-			customerDao.addCustomer(new Customer("Majka", "Lolo"));
-			customerDao.addCustomer(new Customer("Witold", "Pomazanka"));
-			customerDao.addCustomer(new Customer("Adrian", "Pomazanka"));
-			customerDao.addCustomer(new Customer("Marian", "Jowita"));
-			customerDao.addCustomer(new Customer("Witold", "Jowita"));
+			customerDao.addCustomer(new Customer("Jeden", "Dwa"));
+			customerDao.addCustomer(new Customer("Dwa", "Cztery"));
+			customerDao.addCustomer(new Customer("Trzy", "Szesc"));
 
 			log.info("--------------------------------");
 
@@ -60,19 +51,19 @@ public class Application {
 			log.info("----FIND BY FIRST NAME       ----");
 			log.info("--------------------------------");
 			log.info("--------------------------------");
-			log.info(customerDao.findByFirstName("Witold").toString());
+			log.info(customerDao.findByFirstName("Jeden").toString());
 			log.info("--------------------------------");
 			log.info("--------------------------------");
 			log.info("----FIND BY LAST NAME       ----");
 			log.info("--------------------------------");
 			log.info("--------------------------------");
-			log.info(customerDao.findByLastName("Bajka").toString());
+			log.info(customerDao.findByLastName("Szesc").toString());
 			log.info("--------------------------------");
 			log.info("--------------------------------");
 			log.info("----FIND BY FIRST ID       ----");
 			log.info("--------------------------------");
 			log.info("--------------------------------");
-			log.info(customerDao.findById(5).toString());
+			log.info(customerDao.findById(3).toString());
 
 			// save a couple of customers
 			// repository.save(new CustomerDAO("Jack", "Bauer"));
