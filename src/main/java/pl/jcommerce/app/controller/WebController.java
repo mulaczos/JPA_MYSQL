@@ -48,7 +48,7 @@ public class WebController {
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView addCustomer(@ModelAttribute("customer") Customer customer) {
-		customerDao.addCustomer(customer);
+		customerDao.save(customer);
 		ModelAndView mv = new ModelAndView("added", "customer", customer);
 		return mv;
 	}
