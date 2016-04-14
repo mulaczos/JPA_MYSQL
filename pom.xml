@@ -42,9 +42,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
 		</dependency>
-
 		
 		<!-- Thymeleaf -->
 		<dependency>
@@ -58,6 +56,13 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<!--  Necessary for understanding: .andExpect(jsonPath("$x").value("x"))... -->
+		<dependency>
+   			 <groupId>com.jayway.jsonpath</groupId>
+    		 <artifactId>json-path-assert</artifactId>
+    		 <scope>test</scope>
 		</dependency>
 		
 		<dependency>

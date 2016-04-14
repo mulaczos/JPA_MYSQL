@@ -16,11 +16,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
-	// @AttributeOverrides({
-	// @AttributeOverride(name="firstName",
-	// column=@Column(name="pierwszeImie")),
-	// @AttributeOverride(name="lastName", column=@Column(name="drugieImie")) })
+	
 	@Embedded
 	private Name name;
 

@@ -21,12 +21,6 @@ import pl.jcommerce.app.model.CustomerDao;
 @Controller
 public class WebController {
 
-	// @Override
-	// public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	// registry.addResourceHandler("/resources/Wi2/**").addResourceLocations("(/resources/Wi2");
-	// }
-	//
-
 	@Autowired
 	private CustomerDao customerDao;
 
@@ -34,8 +28,15 @@ public class WebController {
 	public ModelAndView getFrontPage() {
 		return new ModelAndView("index", "customer", new Customer());
 	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public ModelAndView addCustomer(@ModelAttribute("customer") Customer customer) {
+		customerDao.save(customer);
+		ModelAndView mv = new ModelAndView("added", "customer", customer);
+		return mv;
+	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Customer> findById(@PathVariable("id") long id) {
 		try {
 			Customer customer = customerDao.findById(id);
@@ -45,32 +46,7 @@ public class WebController {
 			return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
 		}
 	}
-
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView addCustomer(@ModelAttribute("customer") Customer customer) {
-		customerDao.save(customer);
-		ModelAndView mv = new ModelAndView("added", "customer", customer);
-		return mv;
-	}
-
-	@RequestMapping("/delete/{id}")
-	public ModelAndView deleteCustomer(@PathVariable("id") long id) {
-		try {
-			Customer customer = customerDao.findById(id);
-			customerDao.delete(customer);
-			return new ModelAndView("deleted", "customer", customer);
-		} catch (EntityNotFoundException e) {
-			System.out.println("User with id: " + id + "Not exist");
-			return new ModelAndView("forward:/");
-		}
-	}
-
-	@RequestMapping("/deleteall")
-	public String deleteAll() {
-		customerDao.deleteAll();
-		return "forward:/all";
-	}
-
+	
 	@RequestMapping(value = "/find/firstname/{firstname}")
 	public ResponseEntity<List<Customer>> findByFirstName(@PathVariable("firstname") String firstname) {
 		try {
@@ -95,5 +71,23 @@ public class WebController {
 	public ResponseEntity<List<Customer>> findAllCustomers() {
 		List<Customer> list = customerDao.findAll();
 		return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
+	}
+	
+	@RequestMapping("/delete/{id}")
+	public ModelAndView deleteCustomer(@PathVariable("id") long id) {
+		try {
+			Customer customer = customerDao.findById(id);
+			customerDao.delete(customer);
+			return new ModelAndView("deleted", "customer", customer);
+		} catch (EntityNotFoundException e) {
+			System.out.println("User with id: " + id + "Not exist");
+			return new ModelAndView("forward:/");
+		}
+	}
+
+	@RequestMapping("/deleteall")
+	public String deleteAll() {
+		customerDao.deleteAll();
+		return "forward:/all";
 	}
 }
