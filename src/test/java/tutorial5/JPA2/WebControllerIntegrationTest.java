@@ -34,10 +34,10 @@ import pl.jcommerce.app.Application;
 import pl.jcommerce.app.model.Customer;
 import pl.jcommerce.app.model.CustomerDao;
 
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @WebAppConfiguration
-//@ActiveProfiles("test")
 @Transactional
 public class WebControllerIntegrationTest {
 
@@ -74,45 +74,28 @@ public class WebControllerIntegrationTest {
 		Integer id = 2;
 		mockMvc.perform(get("/user/{id}", id).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;;charset=UTF-8")).andExpect(jsonPath("id").value(id))
-				.andExpect(jsonPath("firstName").value("Trzy")).andExpect(jsonPath("lastName").value("Cztery"));
+				.andExpect(jsonPath("firstName").value("BAZA2")).andExpect(jsonPath("lastName").value("TESTOWA2"));
 	}
 
 	@Test
 	public void findByFirstName() throws Exception {
-		String firstname = "Piec";
+		String firstname = "BAZA3";
 		Integer id = 3;
-		mockMvc.perform(get("/find/firstname/{firstname}", firstname).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/find/firstname/{firstname}", firstname).accept(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(jsonPath("[0]id").value(id)).andExpect(jsonPath("[0]firstName").value("Piec"))
-				.andExpect(jsonPath("[0]lastName").value("Szesc"));
+				.andExpect(jsonPath("[0]id").value(id)).andExpect(jsonPath("[0]firstName").value("BAZA3"))
+				.andExpect(jsonPath("[0]lastName").value("TESTOWA3"));
 	}
-
+	
 	@Test
 	public void findByLastName() throws Exception {
-		String lastname = "Cztery";
+		String lastname = "TESTOWA2";
 		Integer id = 2;
 		mockMvc.perform(get("/find/lastname/{lastname}", lastname).accept(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(jsonPath("[0]id").value(id)).andExpect(jsonPath("[0]firstName").value("Trzy"))
-				.andExpect(jsonPath("[0]lastName").value("Cztery"));
+				.andExpect(jsonPath("[0]id").value(id)).andExpect(jsonPath("[0]firstName").value("BAZA2"))
+				.andExpect(jsonPath("[0]lastName").value("TESTOWA2"));
 	}
-
-	@RequestMapping(value = "/find/firstname/{firstname}")
-	public ResponseEntity<List<Customer>> findByFirstName(@PathVariable("firstname") String firstname) {
-		try {
-			List<Customer> list = customerDao.findByFirstName(firstname);
-			return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
-		} catch (EntityNotFoundException e) {
-			return new ResponseEntity<List<Customer>>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@RequestMapping(value = "/all")
-	public ResponseEntity<List<Customer>> findAllCustomers() {
-		List<Customer> list = customerDao.findAll();
-		return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);
-	}
-	
 	
 	@Test
 	public void deleteById() throws Exception {

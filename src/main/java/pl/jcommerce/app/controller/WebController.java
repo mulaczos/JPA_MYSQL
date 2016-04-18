@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.jcommerce.app.model.Customer;
 import pl.jcommerce.app.model.CustomerDao;
+
 
 @Controller
 public class WebController {
