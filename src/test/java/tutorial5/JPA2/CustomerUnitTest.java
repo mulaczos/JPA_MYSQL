@@ -1,6 +1,6 @@
 package tutorial5.JPA2;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,36 +9,55 @@ import pl.jcommerce.app.model.Customer;
 
 public class CustomerUnitTest {
 
-	Customer first;
-	Customer secound;
-	
+	Customer obj;
+	Customer equalObj;
+	Customer notEqualObj;
+	Integer expectedHashCode;
+	String specifiedName;
+
 	@Before
 	public void setUp() {
-		first=new Customer("Anna", "Maria");
-		secound=new Customer("Anna", "Maria");
+		obj = new Customer("FirstName1", "LastName1");
+		equalObj = new Customer("FirstName1", "LastName1");
+		notEqualObj = new Customer("Wrong", "Data");
+
+		specifiedName = "Wrong";
+
+		expectedHashCode = 179982906;
 	}
-	
+
 	@Test
-	public void firstEqualsSecound() {
-		assertEquals(first, secound);
+	public void shouldObjEqualToEqualObj() {
+		assertThat(obj).isEqualTo(equalObj);
 	}
+
 	@Test
-	public void firstHashCodeEqualsSecound() {
-		assertEquals("aaa", first.hashCode(), secound.hashCode());
+	public void shouldObjNotEqualToNotEqualObject() {
+		assertThat(obj).isNotEqualTo(notEqualObj);
 	}
+
 	@Test
-	public void firstObjectFieldNameEqualsSecound() {
-		assertEquals(first.getName(), secound.getName());
+	public void shouldObjNotEqualToNull() {
+		assertThat(obj).isNotEqualTo(null);
 	}
+
 	@Test
-	public void firstObjectFieldNameEqualsSecoundByHashCodeMethod() {
-		assertEquals(first.getName().hashCode(), secound.getName().hashCode());
+	public void shouldNotEqualObjEqualToItself() {
+		assertThat(notEqualObj).isEqualTo(notEqualObj);
 	}
+
 	@Test
-	public void firstObjectFieldNameEqualsSecoundByEqualsMethod() {
-		assertTrue(first.getName().equals(secound.getName()));
+	public void shouldObjFieldNameEqualToEqualObjFieldName() {
+		assertThat(obj.getName()).isEqualTo(equalObj.getName());
 	}
-	
-	
-	
+
+	@Test
+	public void shouldNotEqualObjFirstNameEqualToSpecifiedName() {
+		assertThat(notEqualObj.getFirstName()).isEqualTo(specifiedName);
+	}
+
+	@Test
+	public void shouldObjHashCodeEqualToExpectedValue() {
+		assertThat(obj.hashCode()).isEqualTo(expectedHashCode);
+	}
 }

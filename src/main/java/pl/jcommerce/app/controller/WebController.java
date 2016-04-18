@@ -89,6 +89,6 @@ public class WebController {
 	@RequestMapping("/deleteall")
 	public String deleteAll() {
 		customerDao.deleteAll();
-		return "forward:/all";
+		return "forward:/";
 	}
 }
