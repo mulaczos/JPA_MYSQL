@@ -5,21 +5,23 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.jcommerce.app.model.Customer;
 import pl.jcommerce.app.model.CustomerDao;
+import pl.jcommerce.app.model.Name;
 
 
-@Controller
+@RestController
+
 public class WebController {
 
 	@Autowired
@@ -31,11 +33,16 @@ public class WebController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView addCustomer(@ModelAttribute("customer") Customer customer) {
+	public Customer addCustomer(@RequestBody Customer customer){
 		customerDao.save(customer);
-		ModelAndView mv = new ModelAndView("added", "customer", customer);
-		return mv;
+		return customer;
 	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public ModelAndView showAddedCustomer(Customer customer) {
+		return new ModelAndView("added", "customer", customer);
+	}
+	
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Customer> findById(@PathVariable("id") long id) {

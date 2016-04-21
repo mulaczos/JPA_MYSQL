@@ -3,7 +3,6 @@ package tutorial5.JPA2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -55,7 +55,7 @@ public class WebControllerIntegrationTest {
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 		customer = new Customer();
-		indexFile = new File("src\\test\\resources\\index.html");
+		indexFile = new File("src/test/resources/index.html");
 	}
 
 	@Test
@@ -67,6 +67,8 @@ public class WebControllerIntegrationTest {
 		String indexFileToString = FileUtils.readFileToString(indexFile);
 
 		assertThat(content).isEqualTo(indexFileToString);
+		
+		
 
 	}
 
@@ -79,8 +81,9 @@ public class WebControllerIntegrationTest {
 		mockMvc.perform(post("/").param("name.firstName", testFirstName).param("name.lastName", testLastName)
 				.accept(MediaType.TEXT_HTML)).andExpect(view().name("added")).andExpect(status().isOk());
 
-		assertThat(customerDao.findById(4).getFirstName()).isEqualTo(testFirstName);
-		assertThat(customerDao.findById(4).getLastName()).isEqualTo(testLastName);
+		Customer foundUser = customerDao.findById(4);
+		assertThat(foundUser.getFirstName()).isEqualTo(testFirstName);
+		assertThat(foundUser.getLastName()).isEqualTo(testLastName);
 
 	}
 
@@ -143,16 +146,20 @@ public class WebControllerIntegrationTest {
 
 	}
 
-	@Test
+	@Test(expected=EmptyResultDataAccessException.class)
 	public void shouldDeleteById() throws Exception {
-		
-		mockMvc.perform(get("/delete/{id}", 1)).andExpect(view().name("deleted"))
+		int customerId=1;
+		mockMvc.perform(get("/delete/{id}", customerId)).andExpect(view().name("deleted"))
 		.andExpect(status().isOk());
+		assertThat(customerDao.findById(customerId)).isNull();
 		
 	}
 
 	@Test
 	public void shouldDeleteAll() throws Exception {
-		mockMvc.perform(get("/deleteall").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mockMvc.perform(get("/deleteall").accept(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk());
+		
+		assertThat(customerDao.findAll()).isEmpty();
 	}
 }

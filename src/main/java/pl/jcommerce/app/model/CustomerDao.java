@@ -10,8 +10,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 
@@ -25,6 +23,12 @@ public class CustomerDao {
 	public void save(Customer customer) {
 		manager.persist(customer);
 	}
+	@Transactional
+	public Customer add(Customer customer) {
+		manager.persist(customer);
+		return customer;
+	}
+	
 
 	public Customer findById(long id) {
 		TypedQuery<Customer> findByFirstNameQuery = manager.
