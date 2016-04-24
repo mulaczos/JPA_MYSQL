@@ -6,18 +6,17 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.jcommerce.app.model.Customer;
 import pl.jcommerce.app.model.CustomerDao;
-import pl.jcommerce.app.model.Name;
 
 
 @RestController
@@ -27,11 +26,6 @@ public class WebController {
 	@Autowired
 	private CustomerDao customerDao;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView getFrontPage() {
-		return new ModelAndView("index", "customer", new Customer());
-	}
-	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public Customer addCustomer(@RequestBody Customer customer){
 		customerDao.save(customer);
@@ -75,7 +69,7 @@ public class WebController {
 		}
 	}
 
-	@RequestMapping(value = "/all")
+	@RequestMapping(value = "/all", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Customer>> findAllCustomers() {
 		List<Customer> list = customerDao.findAll();
 		return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);

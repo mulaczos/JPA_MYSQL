@@ -1,54 +1,40 @@
 <!DOCTYPE html>
+
 <html data-ng-app="formSubmit">
 <head>
-<meta charset="ISO-8859-1"/>
+<meta charset="ISO-8859-1" />
 <title>AngularJS Post Form Spring MVC example</title>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-resource.js"></script>
 
-	var app = angular.module('formSubmit', []);
-		
-	app.controller('FormSubmitController',[ '$scope', '$http','$location', function($scope, $http, $location) {
-		
-			$scope.headerText = 'W was here';
-			$scope.name={}
-			$scope.submit = function() {
-			
-				var formData = 	{ "name" :
-									{ "firstName" : $scope.name.firstName,
-									  "lastName"  : $scope.name.lastName
-									}
-								};
-				
-				var response = $http.post('/', formData);
-				response.success(function(data, status, headers, config,$location) {
-					$scope.list.push(data),
-					$location.path('/add');
-				});
-				response.error(function(data, status, headers, config) {
-					alert( "Exception details: " + JSON.stringify({data: data}));
-				});
-				
-				//Empty list data after process
-				$scope.list = [];
-				
-				 
-			};
-		}]);
-</script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+<script src="js/index.js"/>
 </head>
 <body>
-	<form data-ng-submit="submit()" data-ng-controller="FormSubmitController">
-		<h3>{{headerText}}</h3>
-		<p>FirstName: <input type="text" data-ng-model="name.firstName"/></p>{{name.firstName}}
-		<p>LastName: <input type="text" data-ng-model="name.lastName"/></p>{{name.lastName}}
-		
-		<input type="submit" id="submit" value="Submit"/>
-		
+	<form data-ng-submit="submit()"
+		data-ng-controller="FormSubmitController">
+		<table>
+			<tr>
+				<td>FirstName: <input type="text" name="firstName" data-ng-model="name.firstName" /></td>
+				<td>{{name.firstName}}</td>
+			</tr>
+			<tr>
+				<td>LastName: <input type="text" name="lastName" data-ng-model="name.lastName" /></td>
+				<td>{{name.lastName}}</td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Add" /></td>
+			</tr>
+
+		</table>
 		<h4>You submitted below data through post:</h4>
-		 <pre>Form data ={{list}}</pre>
+		<pre>Form data ={{list}}</pre>
+		
+		<div>{{body}}</div>
+
 	</form>
-	
+
 </body>
 </html>

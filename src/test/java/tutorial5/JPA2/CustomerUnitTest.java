@@ -51,10 +51,10 @@ public class CustomerUnitTest {
 		assertThat(obj.getName()).isEqualTo(equalObj.getName());
 	}
 
-	@Test
-	public void shouldNotEqualObjFirstNameEqualToSpecifiedName() {
-		assertThat(notEqualObj.getFirstName()).isEqualTo(specifiedName);
-	}
+//	@Test
+//	public void shouldNotEqualObjFirstNameEqualToSpecifiedName() {
+//		assertThat(notEqualObj.getFirstName()).isEqualTo(specifiedName);
+//	}
 
 	@Test
 	public void shouldObjHashCodeEqualToExpectedValue() {

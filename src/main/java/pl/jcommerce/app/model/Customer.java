@@ -35,21 +35,21 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return name.getFirstName();
-	}
-
-	public void setFirstName(String firstName) {
-		this.name.setFirstName(firstName);
-	}
-
-	public String getLastName() {
-		return name.getLastName();
-	}
-
-	public void setLastName(String lastName) {
-		this.name.setLastName(lastName);
-	}
+//	public String getFirstName() {
+//		return name.getFirstName();
+//	}
+//
+//	public void setFirstName(String firstName) {
+//		this.name.setFirstName(firstName);
+//	}
+//
+//	public String getLastName() {
+//		return name.getLastName();
+//	}
+//
+//	public void setLastName(String lastName) {
+//		this.name.setLastName(lastName);
+//	}
 
 	public Name getName() {
 		return name;
