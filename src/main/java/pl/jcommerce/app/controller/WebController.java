@@ -85,10 +85,10 @@ public class WebController {
 			return new ModelAndView("forward:/");
 		}
 	}
-
+	
 	@RequestMapping("/deleteall")
 	public String deleteAll() {
 		customerDao.deleteAll();
-		return "forward:/";
+		return "/";
 	}
 }

@@ -15,7 +15,5 @@ public class IndexController {
 	@RequestMapping(value="add",method = RequestMethod.GET)
 	public String getAllTemplate() {
 		return "added";
-	}
-	
-	
+	}	
 }
