@@ -6,7 +6,6 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,10 +31,10 @@ public class WebController {
 		return customer;
 	}
 	
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView showAddedCustomer(Customer customer) {
-		return new ModelAndView("added", "customer", customer);
-	}
+//	@RequestMapping(value = "/add", method = RequestMethod.GET)
+//	public ModelAndView showAddedCustomer(Customer customer) {
+//		return new ModelAndView("added", "customer", customer);
+//	}
 	
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
@@ -69,7 +68,7 @@ public class WebController {
 		}
 	}
 
-	@RequestMapping(value = "/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/all")
 	public ResponseEntity<List<Customer>> findAllCustomers() {
 		List<Customer> list = customerDao.findAll();
 		return new ResponseEntity<List<Customer>>(list, HttpStatus.OK);

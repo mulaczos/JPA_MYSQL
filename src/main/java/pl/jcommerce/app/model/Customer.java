@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Klient")
 @NamedQuery(name = "firstName", query = "SELECT c FROM Customer c where c.name.firstName like :firstName")
@@ -34,22 +36,22 @@ public class Customer {
 	public void setId(long id) {
 		this.id = id;
 	}
+	@JsonIgnore
+	public String getFirstName() {
+		return name.getFirstName();
+	}
 
-//	public String getFirstName() {
-//		return name.getFirstName();
-//	}
-//
-//	public void setFirstName(String firstName) {
-//		this.name.setFirstName(firstName);
-//	}
-//
-//	public String getLastName() {
-//		return name.getLastName();
-//	}
-//
-//	public void setLastName(String lastName) {
-//		this.name.setLastName(lastName);
-//	}
+	public void setFirstName(String firstName) {
+		this.name.setFirstName(firstName);
+	}
+	@JsonIgnore
+	public String getLastName() {
+		return name.getLastName();
+	}
+
+	public void setLastName(String lastName) {
+		this.name.setLastName(lastName);
+	}
 
 	public Name getName() {
 		return name;
