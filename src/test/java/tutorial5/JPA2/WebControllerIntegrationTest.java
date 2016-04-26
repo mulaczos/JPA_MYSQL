@@ -78,7 +78,7 @@ public class WebControllerIntegrationTest {
 		String testFirstName = "TestStringFirstName";
 		String testLastName = "TestStringLastName";
 
-		mockMvc.perform(post("/").param("name.firstName", testFirstName).param("name.lastName", testLastName)
+		mockMvc.perform(post("/customers/add").param("name.firstName", testFirstName).param("name.lastName", testLastName)
 				.accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
 
 //		Customer foundUser = customerDao.findById(4);
@@ -90,7 +90,7 @@ public class WebControllerIntegrationTest {
 	@Test
 	public void shouldFindById() throws Exception {
 		Integer id = 2;
-		mockMvc.perform(get("/user/{id}", id).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+		mockMvc.perform(get("/customers/{id}", id).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;;charset=UTF-8")).andExpect(jsonPath("id").value(id))
 				.andExpect(jsonPath("name.firstName").value("BAZA2")).andExpect(jsonPath("name.lastName").value("TESTOWA2"));
 	}
@@ -101,7 +101,7 @@ public class WebControllerIntegrationTest {
 		Integer id = 3;
 		// mockMvc.perform(get("/find/firstname/{firstname}",
 		// firstname).accept(MediaType.APPLICATION_JSON)).andDo(print())
-		mockMvc.perform(get("/find/firstname/{firstname}", firstname).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/customers/find/firstname/{firstname}", firstname).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8"))
 				.andExpect(jsonPath("[0]id").value(id)).andExpect(jsonPath("[0]name.firstName").value("BAZA3"))
 				.andExpect(jsonPath("[0]name.lastName").value("TESTOWA3"));
@@ -111,7 +111,7 @@ public class WebControllerIntegrationTest {
 	public void shouldFindByLastName() throws Exception {
 		String lastname = "TESTOWA2";
 		Integer id = 2;
-		mockMvc.perform(get("/find/lastname/{lastname}", lastname).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/customers/find/lastname/{lastname}", lastname).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8"))
 				.andExpect(jsonPath("[0]id").value(id)).andExpect(jsonPath("[0]name.firstName").value("BAZA2"))
 				.andExpect(jsonPath("[0]name.lastName").value("TESTOWA2"));
@@ -132,7 +132,7 @@ public class WebControllerIntegrationTest {
 		String lastName2 = "TESTOWA2";
 		String lastName3 = "TESTOWA3";
 
-		mockMvc.perform(get("/all")).andExpect(status().isOk())
+		mockMvc.perform(get("/customers/all")).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8"))
 
 				.andExpect(jsonPath("[0]id").value(id1)).andExpect(jsonPath("[0]name.firstName").value(firstName1))
@@ -149,7 +149,7 @@ public class WebControllerIntegrationTest {
 	@Test(expected=Exception.class)
 	public void shouldDeleteById() throws Exception {
 		int customerId=1;
-		mockMvc.perform(get("/delete/{id}", customerId)).andExpect(view().name("deleted"))
+		mockMvc.perform(get("/customers/delete/{id}", customerId)).andExpect(view().name("deleted"))
 		.andExpect(status().isOk());
 		assertThat(customerDao.findById(customerId)).isNull();
 		
@@ -157,7 +157,7 @@ public class WebControllerIntegrationTest {
 
 	@Test
 	public void shouldDeleteAll() throws Exception {
-		mockMvc.perform(get("/deleteall").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/customers/deleteall").accept(MediaType.APPLICATION_JSON))
 		.andExpect(status().isOk());
 		
 		assertThat(customerDao.findAll()).isEmpty();

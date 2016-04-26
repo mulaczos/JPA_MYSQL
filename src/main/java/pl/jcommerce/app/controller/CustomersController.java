@@ -19,31 +19,25 @@ import pl.jcommerce.app.model.CustomerDao;
 
 
 @RestController
-
-public class WebController {
+@RequestMapping("/customers")
+public class CustomersController {
 
 	@Autowired
 	private CustomerDao customerDao;
-
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Customer addCustomer(@RequestBody Customer customer){
 		customerDao.save(customer);
 		return customer;
 	}
 	
-//	@RequestMapping(value = "/add", method = RequestMethod.GET)
-//	public ModelAndView showAddedCustomer(Customer customer) {
-//		return new ModelAndView("added", "customer", customer);
-//	}
-	
-
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Customer> findById(@PathVariable("id") long id) {
 		try {
 			Customer customer = customerDao.findById(id);
 			return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 		} catch (EntityNotFoundException e) {
-			System.out.println("User with id " + id + " not found");
+			System.out.println("Customer with id " + id + " not found");
 			return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
 		}
 	}
